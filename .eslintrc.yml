@@ -1,0 +1,21 @@
+env:
+  browser: true
+  es2021: true
+extends:
+  - 'airbnb-vue'
+parserOptions:
+  ecmaVersion: 12
+  sourceType: module
+plugins:
+  - vue
+rules: {
+  "no-param-reassign": [
+      "error",
+    {
+      "props": true,
+      "ignorePropertyModificationsFor": [
+          "state"
+      ]
+    }
+  ]
+}
