@@ -4,22 +4,6 @@
   </div>
 </template>
 
-<!--<script>-->
-<!--import TrafficLight from '../components/TrafficLight.vue';-->
-<!--import { RouteToSignal } from '../const';-->
-
-<!--export default {-->
-<!--  name: 'Main',-->
-<!--  components: {-->
-<!--    TrafficLight,-->
-<!--  },-->
-<!--  beforeRouteEnter(to, from, next) {-->
-<!--    this.setActiveSignal(RouteToSignal[to.path]);-->
-<!--    next();-->
-<!--  },-->
-<!--};-->
-<!--</script>-->
-
 <style>
 .main {
   display: flex;

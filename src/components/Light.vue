@@ -69,6 +69,7 @@ export default {
 .light__text {
   margin: 0;
 
+  font-family: "Arial", "Halvetica", sans-serif;
   font-size: 5vh;
   font-weight: 500;
 }

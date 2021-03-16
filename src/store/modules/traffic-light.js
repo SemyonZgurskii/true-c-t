@@ -10,14 +10,18 @@ export default {
     nextPhase: 1,
   },
   actions: {
-    handlePhaseStart({ commit, state, getters }, signal) {
-      console.log('prog start');
-      commit('setActiveSignal', signal);
+    handlePhaseStart({ commit, state, getters, dispatch }, signal) {
+      if (getters.activeSignal === signal) {
+        dispatch('handleTick');
+      } else {
+        console.log('prog start');
+        commit('setActiveSignal', signal);
 
-      const { pattern } = state;
-      const phase = pattern.indexOf(signal);
-      commit('setPhase', phase);
-      commit('setRemainingTime', getters.duration);
+        const { pattern } = state;
+        const phase = pattern.indexOf(signal);
+        commit('setPhase', phase);
+        commit('setRemainingTime', getters.duration);
+      }
     },
     handlePhaseEnd({ commit, state, getters }) {
       console.log('phase end');

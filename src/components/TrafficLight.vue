@@ -10,7 +10,6 @@
         />
       </li>
     </ul>
-    <p>{{ activeSignal }}</p>
   </div>
 </template>
 
@@ -47,19 +46,6 @@ export default {
         '\nisTransitionActive',
         this.isTransitionActive,
       );
-      // let remainingTime = this.duration;
-
-      // const timerId = setInterval(() => {
-      //   if (this.remainingTime > 0) {
-      //     console.log(this.remainingTime);
-      //     this.handleTick();
-      //   } else {
-      //     const nextRoute = `/${SignalToRoute[this.nextSignal]}`;
-      //     this.$router.push({ path: nextRoute });
-      //     this.handlePhaseEnd();
-      //     clearInterval(timerId);
-      //   }
-      // }, 1000);
       const timerId = setTimeout(() => {
         if (this.remainingTime > 1) {
           this.handleTick();
@@ -81,7 +67,6 @@ export default {
   beforeRouteEnter(to, from, next) {
     next(vm => {
       vm.handlePhaseStart(RouteToSignal[to.path]);
-      // vm.startCycle();
     });
   },
 };
