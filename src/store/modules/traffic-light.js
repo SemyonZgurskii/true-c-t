@@ -14,7 +14,6 @@ export default {
       if (getters.activeSignal === signal) {
         dispatch('handleTick');
       } else {
-        console.log('prog start');
         commit('setActiveSignal', signal);
 
         const { pattern } = state;
