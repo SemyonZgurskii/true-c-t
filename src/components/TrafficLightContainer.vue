@@ -19,7 +19,7 @@ export default {
   },
   beforeRouteEnter(to, from, next) {
     next(vm => {
-      vm.handlePhaseStart(RouteToSignal[to.path]);
+      vm.handleSignalChoose(RouteToSignal[to.path]);
     });
   },
   computed: {
@@ -38,7 +38,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions(['handlePhaseStart', 'handlePhaseEnd', 'handleTick']),
+    ...mapActions(['handleSignalChoose', 'handlePhaseEnd', 'handleTick']),
     startCycle() {
       const timerId = setTimeout(() => {
         if (this.remainingTime > 1) {

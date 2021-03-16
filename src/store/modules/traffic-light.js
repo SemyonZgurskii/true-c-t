@@ -10,35 +10,41 @@ export default {
     nextPhase: 1,
   },
   actions: {
-    handlePhaseStart({ commit, state, getters, dispatch }, signal) {
+    handleSignalChoose({ commit, state, getters, dispatch }, signal) {
       if (getters.activeSignal === signal) {
         dispatch('handleTick');
       } else {
         commit('setActiveSignal', signal);
 
-        const { pattern } = state;
-        const phase = pattern.indexOf(signal);
-        commit('setPhase', phase);
+        const { pattern, phase } = state;
+        const signalNextIndex = pattern.indexOf(signal, phase);
+        const newPhase = signalNextIndex >= 0 ? signalNextIndex : pattern.indexOf(signal);
+
+        commit('setPhase', newPhase);
+        dispatch('shiftPassedPhase', [newPhase, 'setNextPhase']);
         commit('setRemainingTime', getters.duration);
       }
     },
-    handlePhaseEnd({ commit, state, getters }) {
-      const { phase, pattern, nextPhase } = state;
-      const fullCycleLength = pattern.length - 1;
+    handlePhaseEnd({ commit, state, getters, dispatch }) {
+      const { pattern, phase, nextPhase } = state;
 
-      if (phase + 1 < fullCycleLength) {
-        commit('setPhase', phase + 1);
-        commit('setNextPhase', nextPhase + 1);
-      } else if (phase + 1 === fullCycleLength) {
-        commit('setPhase', phase + 1);
-        commit('setNextPhase', 0);
-      } else {
-        commit('setPhase', 0);
-        commit('setNextPhase', 1);
-      }
+      dispatch('shiftPassedPhase', [phase, 'setPhase']);
+      dispatch('shiftPassedPhase', [nextPhase, 'setNextPhase']);
 
       commit('setActiveSignal', pattern[state.phase]);
       commit('setRemainingTime', getters.duration);
+    },
+    shiftPassedPhase({ state, commit }, phaseWithSetter) {
+      const { pattern } = state;
+      const [phase, phaseSetter] = phaseWithSetter;
+
+      const fullCycleLength = pattern.length - 1;
+
+      if (phase < fullCycleLength) {
+        commit(phaseSetter, phase + 1);
+      } else {
+        commit(phaseSetter, 0);
+      }
     },
     handleTick({ commit, getters }) {
       commit('setRemainingTime', getters.remainingTime - 1);
