@@ -14,59 +14,29 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex';
 import Light from './Light.vue';
-import { RouteToSignal, SignalToRoute } from '../const';
 
 export default {
   name: 'TrafficLight',
   components: {
     Light,
   },
-  beforeRouteEnter(to, from, next) {
-    next(vm => {
-      vm.handlePhaseStart(RouteToSignal[to.path]);
-    });
-  },
-  computed: {
-    ...mapGetters([
-      'signals',
-      'activeSignal',
-      'nextSignal',
-      'duration',
-      'remainingTime',
-      'isTransitionActive',
-    ]),
-  },
-  watch: {
-    remainingTime() {
-      this.startCycle();
+  props: {
+    signals: {
+      type: Array,
+      required: true,
     },
-  },
-  methods: {
-    ...mapActions(['handlePhaseStart', 'handlePhaseEnd', 'handleTick']),
-    startCycle() {
-      console.log(
-        'currentSignal:',
-        this.activeSignal,
-        '\nnextSignal:',
-        this.nextSignal,
-        '\nremainingTime',
-        this.remainingTime,
-        '\nisTransitionActive',
-        this.isTransitionActive,
-      );
-      const timerId = setTimeout(() => {
-        if (this.remainingTime > 1) {
-          this.handleTick();
-          clearTimeout(timerId);
-        } else {
-          const nextRoute = `/${SignalToRoute[this.nextSignal]}`;
-          this.$router.push({ path: nextRoute });
-          this.handlePhaseEnd();
-          clearTimeout(timerId);
-        }
-      }, 1000);
+    activeSignal: {
+      type: String,
+      required: true,
+    },
+    remainingTime: {
+      type: Number,
+      required: true,
+    },
+    isTransitionActive: {
+      type: Boolean,
+      required: true,
     },
   },
 };

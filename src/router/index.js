@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import TrafficLight from '../components/TrafficLight.vue';
+import TrafficLightContainer from '../components/TrafficLightContainer.vue';
 
 Vue.use(VueRouter);
 
@@ -11,7 +11,7 @@ export default new VueRouter({
     {
       path: '/:color',
       name: 'traffic-light',
-      component: TrafficLight,
+      component: TrafficLightContainer,
     },
   ],
 });
