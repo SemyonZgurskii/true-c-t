@@ -23,7 +23,6 @@ export default {
       }
     },
     handlePhaseEnd({ commit, state, getters }) {
-      console.log('phase end');
       const { phase, pattern, nextPhase } = state;
       const fullCycleLength = pattern.length - 1;
 
