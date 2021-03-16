@@ -23,6 +23,11 @@ export default {
   components: {
     Light,
   },
+  beforeRouteEnter(to, from, next) {
+    next(vm => {
+      vm.handlePhaseStart(RouteToSignal[to.path]);
+    });
+  },
   computed: {
     ...mapGetters([
       'signals',
@@ -32,6 +37,11 @@ export default {
       'remainingTime',
       'isTransitionActive',
     ]),
+  },
+  watch: {
+    remainingTime() {
+      this.startCycle();
+    },
   },
   methods: {
     ...mapActions(['handlePhaseStart', 'handlePhaseEnd', 'handleTick']),
@@ -58,16 +68,6 @@ export default {
         }
       }, 1000);
     },
-  },
-  watch: {
-    remainingTime() {
-      this.startCycle();
-    },
-  },
-  beforeRouteEnter(to, from, next) {
-    next(vm => {
-      vm.handlePhaseStart(RouteToSignal[to.path]);
-    });
   },
 };
 </script>
